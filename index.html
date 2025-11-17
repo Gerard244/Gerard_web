@@ -1,174 +1,191 @@
+```html
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Google Sign-In Pro</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Google Sign-In Ultra Fusion</title>
 
 <!-- Google Sign-In -->
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <meta name="google-signin-client_id" content="EL_TEU_ID.apps.googleusercontent.com">
 
-<!-- GOOGLE FONT + ICONS -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
 <style>
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Inter', sans-serif;
-    }
+body {
+    background: linear-gradient(135deg, #dfe8ff 0%, #eef3ff 40%, #ffffff 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
 
-    body {
-        background: linear-gradient(135deg, #e8f0fe, #ffffff);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 40px;
-    }
+/* BUBBLES */
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.45);
+    box-shadow: 0 0 25px rgba(0,0,0,0.08);
+    animation: float 12s infinite ease-in-out;
+}
 
-    /* CARD PRINCIPAL */
-    .card {
-        background: white;
-        width: 100%;
-        max-width: 430px;
-        border-radius: 22px;
-        padding: 40px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        text-align: center;
-        transform: translateY(20px);
-        opacity: 0;
-        animation: fadeInSlide 0.8s ease forwards;
-    }
+@keyframes float {
+    0% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-80px) scale(1.1); }
+    100% { transform: translateY(0) scale(1); }
+}
 
-    @keyframes fadeInSlide {
-        from { transform: translateY(40px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
+/* CARD */
+.card {
+    backdrop-filter: blur(18px);
+    background: rgba(255, 255, 255, 0.70);
+    padding: 50px;
+    width: 430px;
+    border-radius: 28px;
+    text-align: center;
+    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.18);
+    animation: fadeIn 1s ease forwards;
+}
 
-    /* TITOL */
-    h1 {
-        font-size: 28px;
-        margin-bottom: 12px;
-        font-weight: 700;
-        color: #1a73e8;
-    }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-    p {
-        margin-bottom: 25px;
-        color: #4d4d4d;
-        font-size: 16px;
-    }
+h1 {
+    font-size: 38px;
+    font-weight: 800;
+    color: #1a4cff;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
-    /* MISSATGE BENVIENGUDA */
-    #missatge-benvinguda {
-        font-size: 22px;
-        font-weight: 600;
-        color: #1a73e8;
-        margin-top: 20px;
-        opacity: 0;
-        transform: scale(0.9);
-        transition: all 0.3s ease;
-    }
+p {
+    font-size: 17px;
+    color: #4c5566;
+    margin-bottom: 25px;
+}
 
-    /* BOTÓ DESCONNECTAR */
-    #boto-sortir {
-        margin-top: 25px;
-        padding: 12px 25px;
-        font-size: 16px;
-        border: none;
-        border-radius: 8px;
-        background: #d93025;
-        color: white;
-        cursor: pointer;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        display: none;
-        transition: 0.25s;
-    }
+/* BENVIUNGUDA */
+#missatge-benvinguda {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1a73e8;
+    margin-top: 20px;
+    opacity: 0;
+    transform: scale(0.9);
+    display: none;
+    transition: all 0.3s ease;
+}
 
-    #boto-sortir:hover {
-        background: #b3261e;
-    }
+/* BOTÓ SORTIR */
+#boto-sortir {
+    margin-top: 25px;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background: #e53935;
+    color: white;
+    cursor: pointer;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: 0.2s;
+}
 
-    /* ANIMACIÓ BOTÓ LOGIN */
-    .g_id_signin {
-        animation: popin 0.5s ease;
-    }
+#boto-sortir:hover {
+    background: #c62828;
+    transform: scale(1.05);
+}
 
-    @keyframes popin {
-        from { transform: scale(0.7); opacity: 0; }
-        to { transform: scale(1); opacity: 1; }
-    }
+/* Animació botó login */
+.g_id_signin {
+    animation: popin 0.5s ease;
+}
+
+@keyframes popin {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
 </style>
-
 </head>
+
 <body>
 
-    <div class="card">
+<!-- BUBBLES -->
+<div class="bubble" style="width:90px;height:90px;top:10%;left:12%;animation-delay:0s"></div>
+<div class="bubble" style="width:55px;height:55px;top:70%;left:25%;animation-delay:1.2s"></div>
+<div class="bubble" style="width:110px;height:110px;top:50%;left:70%;animation-delay:0.6s"></div>
 
-        <h1>Google Sign-In</h1>
-        <p>Autentica’t amb el teu compte Google per accedir.</p>
+<div class="card">
+    <h1>Google Sign-In</h1>
+    <p>Autentica’t amb el teu compte Google per accedir.</p>
 
-        <!-- Div inicialització -->
-        <div id="g_id_onload"
-            data-client_id="EL_TEU_ID.apps.googleusercontent.com"
-            data-callback="onSignIn">
-        </div>
-
-        <!-- BOTÓ LOGIN -->
-        <div class="g_id_signin" data-type="standard" data-size="large"></div>
-
-        <!-- MISSATGE BENVIENGUDA -->
-        <h2 id="missatge-benvinguda" style="display:none;">Benvingut/da!</h2>
-
-        <!-- BOTÓ SORTIR -->
-        <button id="boto-sortir" onclick="signOut()">
-            <span class="material-icons" style="vertical-align: middle; margin-right: 6px;">logout</span>
-            Sortir
-        </button>
-
+    <!-- Inicialització -->
+    <div id="g_id_onload"
+         data-client_id="EL_TEU_ID.apps.googleusercontent.com"
+         data-callback="onSignIn">
     </div>
+
+    <!-- Botó Login -->
+    <div class="g_id_signin" data-type="standard" data-size="large"></div>
+
+    <!-- Missatge -->
+    <h2 id="missatge-benvinguda">Benvingut/da!</h2>
+
+    <!-- Botó Sortir -->
+    <button id="boto-sortir" onclick="signOut()">
+        <span class="material-icons" style="vertical-align: middle; margin-right: 6px;">logout</span>
+        Sortir
+    </button>
+</div>
 
 <script>
 function onSignIn(response) {
     const id_token = response.credential;
     console.log("ID Token:", id_token);
 
-    // Amagar login
-    document.querySelector(".g_id_signin").style.display = "none";
+    document.querySelector('.g_id_signin').style.display = 'none';
+    const msg = document.getElementById('missatge-benvinguda');
+    msg.style.display = 'block';
 
-    // Mostrar botó sortir
-    const btn = document.getElementById("boto-sortir");
-    btn.style.display = "inline-block";
-
-    // Mostrar benvinguda amb animació
-    const msg = document.getElementById("missatge-benvinguda");
-    msg.style.display = "block";
     setTimeout(() => {
-        msg.style.opacity = "1";
-        msg.style.transform = "scale(1)";
+        msg.style.opacity = '1';
+        msg.style.transform = 'scale(1)';
     }, 50);
+
+    const btn = document.getElementById('boto-sortir');
+    btn.style.display = 'inline-block';
 }
 
 function signOut() {
-    // Mostrar login
-    document.querySelector(".g_id_signin").style.display = "block";
+    document.querySelector('.g_id_signin').style.display = 'block';
 
-    // Amagar botó sortir
-    document.getElementById("boto-sortir").style.display = "none";
+    const msg = document.getElementById('missatge-benvinguda');
+    msg.style.opacity = '0';
+    msg.style.transform = 'scale(0.9)';
 
-    // Amagar missatge
-    const msg = document.getElementById("missatge-benvinguda");
-    msg.style.opacity = "0";
-    msg.style.transform = "scale(0.9)";
-    setTimeout(() => { msg.style.display = "none"; }, 200);
+    setTimeout(() => {
+        msg.style.display = 'none';
+    }, 200);
+
+    document.getElementById('boto-sortir').style.display = 'none';
 }
 </script>
 
 </body>
 </html>
+```
